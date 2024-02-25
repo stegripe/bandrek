@@ -1,3 +1,3 @@
-# @stegripe/template
+# bandrek
 
-A template to generate well-configured project base for Stegripe.
+Sebuah standalone SQL Panel (bundled), yang dapat digunakan untuk mempermudah workflow penggunaan database.
