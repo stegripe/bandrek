@@ -1,7 +1,7 @@
 {
-    "name": "template",
+    "name": "bandrek",
     "version": "1.0.0",
-    "description": "A template to generate well-configured project base for Stegripe.",
+    "description": "Sebuah standalone SQL Panel (bundled), yang dapat digunakan untuk mempermudah workflow penggunaan database.",
     "main": "dist/index.js",
     "type": "module",
     "scripts": {
