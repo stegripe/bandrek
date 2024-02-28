@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "description": "Sebuah standalone MySQL Panel (bundled), yang dapat digunakan untuk mempermudah workflow penggunaan. Menggunakan MariaDB sebagai database.",
     "main": "dist/index.js",
-    "type": "module",
+    "types": "module",
     "scripts": {
         "build": "npm run lint && npm run compile",
         "compile": "tsc --build tsconfig.json",
@@ -30,16 +30,20 @@
         "extends": "@clytage/eslint-config/typescript",
         "ignorePatterns": "dist/*"
     },
+    "dependencies": {
+        "next": "^14.1.0",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "sequelize": "^6.37.1"
+    },
     "devDependencies": {
         "@clytage/eslint-config": "^3.0.1",
         "@types/node": "^20.11.20",
+        "@types/react": "^18.2.60",
         "@typescript-eslint/eslint-plugin": "^6.21.0",
         "@typescript-eslint/parser": "^6.21.0",
         "eslint": "^8.57.0",
         "rimraf": "^5.0.5",
         "typescript": "^5.3.3"
-    },
-    "dependencies": {
-        "sequelize": "^6.37.1"
     }
 }
