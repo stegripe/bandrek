@@ -19,9 +19,6 @@ dependencies:
     version: 6.37.1
 
 devDependencies:
-  '@clytage/eslint-config':
-    specifier: ^3.0.1
-    version: 3.0.1(@eslint/js@8.57.0)(@typescript-eslint/eslint-plugin@6.21.0)(@typescript-eslint/parser@6.21.0)(eslint@8.57.0)(typescript@5.3.3)
   '@types/node':
     specifier: ^20.11.20
     version: 20.11.20
@@ -63,29 +60,6 @@ packages:
   /@alloc/quick-lru@5.2.0:
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
-    dev: true
-
-  /@clytage/eslint-config@3.0.1(@eslint/js@8.57.0)(@typescript-eslint/eslint-plugin@6.21.0)(@typescript-eslint/parser@6.21.0)(eslint@8.57.0)(typescript@5.3.3):
-    resolution: {integrity: sha512-vSxaKElSjPs7jLu7qTP4K14P73UNKU3TPme2jZpr8iJ/UE20WNq2Xdv9sruCWNRc1sKd6xWEiABUtTG9nD/Tbw==}
-    peerDependencies:
-      '@eslint/js': ^8.44.0
-      '@typescript-eslint/eslint-plugin': '>=6.0.0'
-      '@typescript-eslint/parser': '>=6.0.0'
-      eslint: '>=8.44.0'
-      typescript: '>=3.3.1 <6.0.0'
-    peerDependenciesMeta:
-      '@typescript-eslint/eslint-plugin':
-        optional: true
-      '@typescript-eslint/parser':
-        optional: true
-      typescript:
-        optional: true
-    dependencies:
-      '@eslint/js': 8.57.0
-      '@typescript-eslint/eslint-plugin': 6.21.0(@typescript-eslint/parser@6.21.0)(eslint@8.57.0)(typescript@5.3.3)
-      '@typescript-eslint/parser': 6.21.0(eslint@8.57.0)(typescript@5.3.3)
-      eslint: 8.57.0
-      typescript: 5.3.3
     dev: true
 
   /@eslint-community/eslint-utils@4.4.0(eslint@8.57.0):

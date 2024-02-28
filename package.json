@@ -27,10 +27,6 @@
         "node": ">=16.6.0",
         "npm": ">=7.0.0"
     },
-    "eslintConfig": {
-        "extends": "@clytage/eslint-config/typescript",
-        "ignorePatterns": "dist/*"
-    },
     "dependencies": {
         "next": "^14.1.0",
         "react": "^18.2.0",
@@ -38,7 +34,6 @@
         "sequelize": "^6.37.1"
     },
     "devDependencies": {
-        "@clytage/eslint-config": "^3.0.1",
         "@types/node": "^20.11.20",
         "@types/react": "^18.2.60",
         "@typescript-eslint/eslint-plugin": "^6.21.0",
