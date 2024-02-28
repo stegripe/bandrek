@@ -1,28 +1,41 @@
 {
-    "compilerOptions": {
-        "target": "ESNext",
-        "module": "NodeNext",
-        "moduleResolution": "NodeNext",
-        "lib": [
-            "ESNext"
-        ],
-        "strict": true,
-        "outDir": "dist",
-        "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true,
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
-        "skipLibCheck": true,
-        "noEmitHelpers": true,
-        "importHelpers": true,
-        "resolveJsonModule": true,
-        "typeRoots": [
-            "node_modules/@types",
-            "src/typings"
-        ]
-    },
-    "exclude": [],
-    "include": [
-        "src/**/*"
-    ]
+  "compilerOptions": {
+    "strictNullChecks": true,
+    "jsx": "preserve",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
+    "strict": true,
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "importHelpers": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "incremental": true,
+    "typeRoots": [
+      "node_modules/@types",
+      "src/typings"
+    ],
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "allowJs": true
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.js",
+    ".next/types/**/*.ts"
+  ]
 }
