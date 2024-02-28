@@ -10,7 +10,8 @@
         "lint": "eslint . --ignore-path .gitignore --ext .ts",
         "lint:fix": "npm run lint -- --fix",
         "start": "node --es-module-specifier-resolution=node .",
-        "start:dev": "rimraf ./dist && npm run compile && npm start"
+        "start:dev": "rimraf ./dist && npm run compile && npm start",
+        "dev": "next dev"
     },
     "repository": {
         "type": "git",
@@ -42,8 +43,11 @@
         "@types/react": "^18.2.60",
         "@typescript-eslint/eslint-plugin": "^6.21.0",
         "@typescript-eslint/parser": "^6.21.0",
+        "autoprefixer": "^10.4.17",
         "eslint": "^8.57.0",
+        "postcss": "^8.4.35",
         "rimraf": "^5.0.5",
+        "tailwindcss": "^3.4.1",
         "typescript": "^5.3.3"
     }
 }
