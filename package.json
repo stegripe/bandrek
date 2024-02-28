@@ -1,7 +1,7 @@
 {
     "name": "bandrek",
     "version": "1.0.0",
-    "description": "Sebuah standalone SQL Panel (bundled), yang dapat digunakan untuk mempermudah workflow penggunaan database.",
+    "description": "Sebuah standalone MySQL Panel (bundled), yang dapat digunakan untuk mempermudah workflow penggunaan. Menggunakan MariaDB sebagai database.",
     "main": "dist/index.js",
     "type": "module",
     "scripts": {
