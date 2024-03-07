@@ -7,7 +7,7 @@ export default async function retrieveAll(
 ) {
     const table = req.query["table"];
     if (!table) {
-        res.status(400).json({ message: "Ngawur cik, mana nama tablenya???" });
+        res.status(400).json({ message: "Invalid table name." });
         return;
     }
 

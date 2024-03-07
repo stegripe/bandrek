@@ -1,4 +1,4 @@
-import connection from "../../index"; // ts server nya stress
+import connection from "../../index";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function tables(
