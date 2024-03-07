@@ -7,3 +7,5 @@ const client = new Sequelize({
     username: "root",
     port: 3306,
 });
+
+export default client;
