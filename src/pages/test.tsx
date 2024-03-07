@@ -3,13 +3,13 @@ import Dropdown from "../components/Dropdown";
 function SampleDropdown() {
     return (
         <Dropdown head="Schemas" items={[
-            <Dropdown head="Schema 1" items={[
-                <p>Table A</p>,
-                <p>Table B</p>
+            <Dropdown key={0} head="Schema 1" items={[
+                <p key={0}>Table A</p>,
+                <p key={1}>Table B</p>
             ]} />,
-            <Dropdown head="Schema 2" items={[
-                <p>Table User</p>,
-                <p>Table Player</p>
+            <Dropdown key={1} head="Schema 2" items={[
+                <p key={0}>Table User</p>,
+                <p key={1}>Table Player</p>
             ]} />
         ]} />
     )

@@ -12,8 +12,8 @@ export default function Dropdown({ head, items }: { head: ReactNode; items: Reac
             </div>
             {open && (
                 <div className="flex flex-col">
-                    {items.map(x => (
-                        <div className="border-l border-black ml-2 pl-2 hover:bg-white hover:bg-opacity-20">{x}</div>
+                    {items.map((x, i) => (
+                        <div key={i} className="border-l border-black ml-2 pl-2 hover:bg-white hover:bg-opacity-20">{x}</div>
                     ))}
                 </div>
             )}
