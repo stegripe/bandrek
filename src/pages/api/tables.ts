@@ -7,10 +7,13 @@ export default async function tables(
 ) {
     const db = req.query["db"];
     if (!db) {
-        res.status(400).json({ message: "Ngawur cik, mana nama dbnya???" });
+        res.status(400).json({ message: "Invalid database name" });
         return;
     }
 
-    const query = await connection.query("SHOW TABLES");
+    const query = await connection.query({
+        query: "SHOW TABLES FROM ?",
+        values: [db]
+      });
     res.status(200).json(query);
 }
