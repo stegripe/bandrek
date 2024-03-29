@@ -21,8 +21,8 @@ dependencies:
     specifier: ^5.0.1
     version: 5.0.1(react@18.2.0)
   sequelize:
-    specifier: ^6.37.1
-    version: 6.37.1(mariadb@3.3.0)
+    specifier: ^6.37.2
+    version: 6.37.2(mariadb@3.3.0)
 
 devDependencies:
   '@types/node':
@@ -2553,8 +2553,8 @@ packages:
     engines: {node: '>= 10.0.0'}
     dev: false
 
-  /sequelize@6.37.1(mariadb@3.3.0):
-    resolution: {integrity: sha512-vIKKzQ9dGp2aBOxQRD1FmUYViuQiKXSJ8yah8TsaBx4U3BokJt+Y2A0qz2C4pj08uX59qpWxRqSLEfRmVOEgQw==}
+  /sequelize@6.37.2(mariadb@3.3.0):
+    resolution: {integrity: sha512-bnb7swGANONXCTrVyebpOOZssLwQrVkYX2tcC6qOIvH+P+OhsoMBi7c3GXI5bC+Z4b4tOl+kQy6yeqLCZ1YQAQ==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       ibm_db: '*'
