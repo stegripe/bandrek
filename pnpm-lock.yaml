@@ -21,8 +21,8 @@ dependencies:
     specifier: ^5.0.1
     version: 5.0.1(react@18.2.0)
   sequelize:
-    specifier: ^6.37.2
-    version: 6.37.2(mariadb@3.3.0)
+    specifier: ^6.37.3
+    version: 6.37.3(mariadb@3.3.0)
 
 devDependencies:
   '@types/node':
@@ -2654,29 +2654,20 @@ packages:
     hasBin: true
     dev: true
 
-  /semver@7.5.4:
-    resolution: {integrity: sha512-1bCSESV6Pv+i21Hvpxp3Dx+pSD8lIPt8uVjRrxAUt/nbswYc+tK6Y2btiULjd4+fnq15PX+nqQDC7Oft7WkwcA==}
-    engines: {node: '>=10'}
-    hasBin: true
-    dependencies:
-      lru-cache: 6.0.0
-    dev: false
-
   /semver@7.6.0:
     resolution: {integrity: sha512-EnwXhrlwXMk9gKu5/flx5sv/an57AkRplG3hTK68W7FRDN+k+OWBj65M7719OkA82XLBxrcX0KSHj+X5COhOVg==}
     engines: {node: '>=10'}
     hasBin: true
     dependencies:
       lru-cache: 6.0.0
-    dev: true
 
   /sequelize-pool@7.1.0:
     resolution: {integrity: sha512-G9c0qlIWQSK29pR/5U2JF5dDQeqqHRragoyahj/Nx4KOOQ3CPPfzxnfqFPCSB7x5UgjOgnZ61nSxz+fjDpRlJg==}
     engines: {node: '>= 10.0.0'}
     dev: false
 
-  /sequelize@6.37.2(mariadb@3.3.0):
-    resolution: {integrity: sha512-bnb7swGANONXCTrVyebpOOZssLwQrVkYX2tcC6qOIvH+P+OhsoMBi7c3GXI5bC+Z4b4tOl+kQy6yeqLCZ1YQAQ==}
+  /sequelize@6.37.3(mariadb@3.3.0):
+    resolution: {integrity: sha512-V2FTqYpdZjPy3VQrZvjTPnOoLm0KudCRXfGWp48QwhyPPp2yW8z0p0sCYZd/em847Tl2dVxJJ1DR+hF+O77T7A==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       ibm_db: '*'
@@ -2719,7 +2710,7 @@ packages:
       moment-timezone: 0.5.45
       pg-connection-string: 2.6.2
       retry-as-promised: 7.0.4
-      semver: 7.5.4
+      semver: 7.6.0
       sequelize-pool: 7.1.0
       toposort-class: 1.0.1
       uuid: 8.3.2
