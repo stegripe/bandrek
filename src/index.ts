@@ -1,4 +1,4 @@
-import { Sequelize } from "sequelize";
+import { Sequelize } from "@sequelize/core";
 
 const client = new Sequelize({
     dialect: "mariadb",
