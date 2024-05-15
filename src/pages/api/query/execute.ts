@@ -1,3 +1,4 @@
+import { QueryTypes } from "@sequelize/core";
 import connection from "../../../index";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -12,8 +13,10 @@ export default async function executeQuery(
 
     try {
         const r = await connection.query(req.body.query, {
-            replacements: req.body.values,
+            replacements: req.body.values
         });
+
+        console.log("Query result: ", r);
 
         res.status(200).json({ code: 200, status: "OK", data: r });
     } catch (e) {

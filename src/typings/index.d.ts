@@ -12,3 +12,7 @@ interface SuccessAPIResult extends BaseAPIResult {
 }
 
 type APIResult = ErrorAPIResult | SuccessAPIResult;
+
+interface BigInt {
+    toJSON(): string;
+}

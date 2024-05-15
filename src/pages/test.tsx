@@ -1,29 +1,80 @@
+import { useContext, useEffect, useState } from "react";
+import TableContext from "../components/TableContext";
+import { executeQuery } from "../utils/api/executeQuery";
 import Dropdown from "../components/Dropdown";
+import Editor from "../components/Editor";
 
 function SampleDropdown() {
     return (
-        <Dropdown head="Schemas" items={[
-            <Dropdown key={0} head="Schema 1" items={[
-                <p key={0}>Table A</p>,
-                <p key={1}>Table B</p>
-            ]} />,
-            <Dropdown key={1} head="Schema 2" items={[
-                <p key={0}>Table User</p>,
-                <p key={1}>Table Player</p>
-            ]} />
-        ]} />
+        <Dropdown head="Schemas">
+            <Dropdown head="Schema 2">
+                <p>Table User</p>
+                <p>Table Player</p>
+            </Dropdown>
+            <Dropdown head="Schema 1">
+                <p>Table A</p>
+                <p>Table B</p>
+            </Dropdown>
+        </Dropdown>
     )
 }
 
+function TableDropdown({ head }: { head: string }) {
+    const { setSelection } = useContext(TableContext);
+    const [tables, setTables] = useState<{ [K: string]: string }[] | null>(null);
+    const [loading, setLoading] = useState(false);
+
+    return <Dropdown
+        onOpen={() => {
+            if (tables || loading) return;
+
+            setLoading(true);
+            executeQuery(`show tables in ${head}`, []).then((response) => {
+                setTables("data" in response ? response.data[0] : null);
+                console.log(response);
+                setLoading(false);
+            });
+        }}
+        head={head}>
+        {
+            loading
+                ? <p>Loading...</p>
+                : tables && tables.map(tab => {
+                    const name = Object.values(tab)[0];
+                    return <button
+                        onClick={() => setSelection({ database: head, table: name })}
+                        className="text-left"
+                        key={name}>
+                        {name}
+                    </button>
+                })
+        }
+    </Dropdown>
+}
+
 export default function TestPage() {
+    const [databases, setDatabases] = useState<{ Database: string }[] | null>(null);
+    const [selection, setSelection] = useState<{ database: string; table: string } | null>(null);
+
+    useEffect(() => {
+        executeQuery("show databases", []).then((response) => {
+            setDatabases("data" in response ? response.data[0] : null);
+        });
+    }, []);
+
     return (
-        <div className="w-screen h-screen bg-slate-600 text-white flex flex-col">
+        <div className="w-screen h-screen max-h-[100vh] text-white flex flex-col">
             <p className="w-full text-center text-xl font-bold py-2 border-b border-black">Bandrek</p>
-            <div className="w-full h-full flex">
-                <div className="p-5 min-w-64 h-full border-r border-black">
-                    <SampleDropdown />
+            <TableContext.Provider value={{ selection, setSelection }}>
+                <div className="w-full h-full flex">
+                    <div className="w-96 max-h-full overflow-auto border-r border-black">
+                        {databases && databases.map(({ Database }) => <TableDropdown head={Database} key={Database}/>)}
+                    </div>
+                    <div className="w-full h-full overflow-auto">
+                        <Editor />
+                    </div>
                 </div>
-            </div>
+            </TableContext.Provider>
         </div>
     )
 }
