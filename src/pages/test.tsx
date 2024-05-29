@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import TableContext from "../components/TableContext";
 import { executeQuery } from "../utils/api/executeQuery";
 import Dropdown from "../components/Dropdown";
+import HoverHL from "../components/HoverHL";
 import Editor from "../components/Editor";
 
 function SampleDropdown() {
@@ -41,12 +42,13 @@ function TableDropdown({ head }: { head: string }) {
                 ? <p>Loading...</p>
                 : tables && tables.map(tab => {
                     const name = Object.values(tab)[0];
-                    return <button
-                        onClick={() => setSelection({ database: head, table: name })}
-                        className="text-left"
-                        key={name}>
-                        {name}
-                    </button>
+                    return <HoverHL key={name}>
+                        <button
+                            onClick={() => setSelection({ database: head, table: name })}
+                            className="text-left w-full h-full">
+                            {name}
+                        </button>
+                    </HoverHL>
                 })
         }
     </Dropdown>

@@ -1,4 +1,3 @@
-import maria from "mariadb";
 import { Sequelize } from "@sequelize/core";
 
 const client = new Sequelize({
@@ -7,10 +6,8 @@ const client = new Sequelize({
     port: parseInt(process.env.DB_PORT || "3306"),
     username: process.env.DB_USERNAME || "root",
     password: process.env.DB_PASSWORD || "youshallnotpass",
-    dialectModule: maria,
     dialectOptions: {
-        bigIntAsNumber: true,
-        checkNumberRange: true,
+        supportBigNumbers: true
     }
 });
 

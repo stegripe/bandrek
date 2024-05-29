@@ -16,8 +16,6 @@ export default async function executeQuery(
             replacements: req.body.values
         });
 
-        console.log("Query result: ", r);
-
         res.status(200).json({ code: 200, status: "OK", data: r });
     } catch (e) {
         res.status(500).json({ code: 500, status: "Internal Server Error", message: (e as Error).message });
