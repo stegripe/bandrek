@@ -65,7 +65,7 @@ export default function TestPage() {
     }, []);
 
     return (
-        <div className="w-screen h-screen max-h-[100vh] text-white flex flex-col">
+        <div className="w-full h-full max-h-full text-white flex flex-col">
             <p className="w-full text-center text-xl font-bold py-2 border-b border-black">Bandrek</p>
             <TableContext.Provider value={{ selection, setSelection }}>
                 <div className="w-full h-full flex">
