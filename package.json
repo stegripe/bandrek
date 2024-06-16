@@ -4,12 +4,9 @@
     "description": "Sebuah standalone MySQL Panel (bundled), yang dapat digunakan untuk mempermudah workflow penggunaan. Menggunakan MariaDB sebagai database.",
     "main": "dist/index.js",
     "scripts": {
-        "build": "npm run lint && npm run compile",
-        "compile": "tsc --build tsconfig.json",
+        "build": "next build",
         "lint": "next lint",
-        "lint:fix": "npm run lint -- --fix",
-        "start": "node --es-module-specifier-resolution=node .",
-        "start:dev": "rimraf ./dist && npm run compile && npm start",
+        "start": "next start -p 3000",
         "dev": "next dev"
     },
     "repository": {
