@@ -15,6 +15,9 @@ RUN pnpm install --offline --frozen-lockfile
 # Copy Project files
 COPY . .
 
+# Copy .env file
+COPY .env.production .env
+
 # Build TypeScript Project
 RUN pnpm run build
 
@@ -24,7 +27,7 @@ RUN pnpm prune --production
 # Get ready for production
 FROM ghcr.io/hazmi35/node:21-alpine
 
-LABEL name "linkbio"
+LABEL name "bandrek"
 LABEL maintainer "Stegripe <admin@stegripe.org>"
 
 # Copy needed files
