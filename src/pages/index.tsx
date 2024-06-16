@@ -1,109 +1,103 @@
-"use client";
+import { executeQuery } from "../utils/api/executeQuery";
 
-import React from "react";
+import ModalsMain from "../components/Modals/ModalsMain";
+import TableDropdown from "../components/TableDropdown";
+import TableContext from "../components/TableContext";
+import Editor from "../components/Editor";
 
-const Data = [
-    {
-        name: "Jane Cooper",
-        title: "Regional Paradigm Technician",
-        status: "Active",
-        role: "Admin",
-        email: "jane@example.com",
-        image: "https://randomuser.me/portraits/women/1.jpg"
-    },
-    {
-        name: "Cody Fisher",
-        title: "Customer",
-        status: "Inactive",
-        role: "Owner",
-        email: "cody@example.com",
-        image: "https://randomuser.me/portraits/men/1.jpg"
-    }
-];
+import { useCallback, useEffect, useState } from "react";
+import Image from "next/image";
 
-export default function Page(): JSX.Element {
-    return (
-        // Database table template tailwindcss
-        <div className="flex flex-col">
-            <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                    <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                        <table className="min-w-full divide-y divide-gray-200">
-                            <thead className="bg-gray-50">
-                                <tr>
-                                    <th
-                                        scope="col"
-                                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                    >
-                                        Name
-                                    </th>
-                                    <th
-                                        scope="col"
-                                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                    >
-                                        Title
-                                    </th>
-                                    <th
-                                        scope="col"
-                                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                    >
-                                        Status
-                                    </th>
-                                    <th
-                                        scope="col"
-                                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                    >
-                                        Role
-                                    </th>
-                                    <th scope="col" className="relative px-6 py-3">
-                                        <span className="sr-only">Edit</span>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody className="bg-white divide-y divide-gray-200">
-                                {Data.map((person, personIdx) => <tr key={personIdx}>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        <div className="flex items-center">
-                                            <div className="flex-shrink-0 h-10 w-10">
-                                                <img
-                                                    className="h-10 w-10 rounded-full"
-                                                    src={person.image}
-                                                    alt=""
-                                                />
-                                            </div>
-                                            <div className="ml-4">
-                                                <div className="text-sm font-medium text-gray-900">
-                                                    {person.name}
-                                                </div>
-                                                <div className="text-sm text-gray-500">
-                                                    {person.email}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        <div className="text-sm text-gray-900">{person.title}</div>
-                                        <div className="text-sm text-gray-500">{person.email}</div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${person.status === "Active" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-                                            {person.status}
-                                        </span>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        {person.role}
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                            Edit
-                                        </a>
-                                    </td>
-                                </tr>)}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
+export default function Index() {
+	const [selection, setSelection] = useState<{ database: string; table: string } | null>(null);
+	const [databases, setDatabases] = useState<{ Database: string }[] | null>(null);
+	const [collations, setCollations] = useState<string[] | null>(null);
+	const [error, setError] = useState<string | null>(null);
+	const [openCDModal, setOpenCDModal] = useState(false);
+	const [openCTModal, setOpenCTModal] = useState(false);
+	const [loading, setLoading] = useState(false);
+	const [contextMenuMain, setContextMenu] = useState<{ mouseX: number; mouseY: number; visible: string; database?: string }>({
+		mouseX: 0,
+		mouseY: 0,
+		visible: ""
+	});
+
+	const handleRightClick = useCallback((event: React.MouseEvent, type: string, database?: string) => {
+		event.preventDefault();
+		setContextMenu({
+			mouseX: event.clientX - 2,
+			mouseY: event.clientY - 4,
+			visible: type,
+			database
+		});
+	}, []);
+
+	const handleClickOutside = useCallback(() => {
+		setContextMenu(prevState => ({ ...prevState, visible: "" }));
+	}, []);
+
+	useEffect(() => {
+		setLoading(true);
+		executeQuery("show databases", []).then(response => {
+			setDatabases("data" in response ? response.data[0] : null);
+			executeQuery(`show collation`, []).then(response => {
+				setCollations(
+					"data" in response ? response.data[1].map((c: { collation: CollationType }) => c.collation.name) : []
+				);
+				setLoading(false);
+			});
+		});
+		document.addEventListener("click", handleClickOutside);
+		return () => {
+			document.removeEventListener("click", handleClickOutside);
+		};
+	}, [handleClickOutside]);
+
+	return (
+		<div className="w-full h-full max-h-full text-white flex flex-col">
+			<p className="w-full text-center text-xl font-bold py-2 border-b border-black">Bandrek</p>
+			<TableContext.Provider value={{ selection, setSelection }}>
+				<div className="w-full h-full flex">
+					<div
+						id="main"
+						className="w-96 max-h-full overflow-auto border-r border-black"
+						onContextMenu={e => handleRightClick(e, "main")}>
+						{databases &&
+							databases.map(({ Database: Database }) => (
+								<div
+									id="database"
+									key={Database}
+									onContextMenu={e => {
+										e.stopPropagation(); // Stop event from propagating to the parent
+										handleRightClick(e, "database", Database);
+									}}>
+									<TableDropdown head={Database} />
+								</div>
+							))}
+					</div>
+					<div className="w-full h-full overflow-auto">
+						<Editor />
+					</div>
+				</div>
+			</TableContext.Provider>
+			<ModalsMain
+				contextMenuMain={contextMenuMain}
+				setOpenCDModal={setOpenCDModal}
+				setOpenCTModal={setOpenCTModal}
+				setDatabases={setDatabases}
+				openCDModal={openCDModal}
+				openCTModal={openCTModal}
+				setLoading={setLoading}
+				collations={collations}
+				setError={setError}
+				loading={loading}
+				error={error}
+			/>
+			{loading && (
+				<div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+					<Image src="https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif" alt="Loading" width={50} height={50} />
+				</div>
+			)}
+		</div>
+	);
 }
