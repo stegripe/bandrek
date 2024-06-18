@@ -33,7 +33,7 @@
         "sequelize": "^6.37.3"
     },
     "devDependencies": {
-        "@types/node": "^20.14.4",
+        "@types/node": "^20.14.5",
         "@types/react": "^18.3.3",
         "@typescript-eslint/eslint-plugin": "^7.13.1",
         "@typescript-eslint/parser": "^7.13.1",
