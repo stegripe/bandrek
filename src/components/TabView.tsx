@@ -1,4 +1,12 @@
-export default function TabView({ setView }: { setView: (view: "data" | "query") => void }) {
+import { Dispatch, SetStateAction } from "react";
+
+export default function TabView({
+	setView,
+	setNewDataView
+}: {
+	setView: Dispatch<SetStateAction<"data" | "query">>;
+	setNewDataView?: Dispatch<SetStateAction<boolean>>;
+}) {
 	return (
 		<div className="flex h-8 border-b border-black">
 			<button

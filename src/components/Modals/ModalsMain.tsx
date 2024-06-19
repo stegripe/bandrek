@@ -1,42 +1,40 @@
 import { executeQuery } from "../../utils/api/executeQuery";
+import AddColumnModal from "./AddColumn";
 
 import CreateDatabaseModal from "./CreateDatabase";
 import CreateTableModal from "./CreateTable";
 
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 export default function ModalsMain({
-	contextMenuMain,
-	setOpenCDModal,
-	setOpenCTModal,
+	contextMenu,
 	setDatabases,
-	openCDModal,
-	openCTModal,
 	setLoading,
 	collations,
-	setError,
+	setTables,
 	loading,
-	error
+	tables
 }: {
+	contextMenu: { mouseX: number; mouseY: number; visible: string; database?: string; table?: string };
 	setDatabases: Dispatch<SetStateAction<{ Database: string }[] | null>>;
-	contextMenuMain: { mouseX: number; mouseY: number; visible: string; database?: string };
-	setError: Dispatch<SetStateAction<string | null>>;
-	setOpenCDModal: Dispatch<SetStateAction<boolean>>;
-	setOpenCTModal: Dispatch<SetStateAction<boolean>>;
+	setTables: Dispatch<SetStateAction<{ [K: string]: string }[] | null>>;
 	setLoading: Dispatch<SetStateAction<boolean>>;
+	tables: { [K: string]: string }[] | null;
 	collations: string[] | null;
-	openCDModal: boolean;
-	openCTModal: boolean;
-	error: string | null;
 	loading: boolean;
 }) {
-	if (contextMenuMain.visible === "main") {
+	const [error, setError] = useState<string | null>(null);
+	const [openCDModal, setOpenCDModal] = useState(false);
+	const [openCTModal, setOpenCTModal] = useState(false);
+	const [openACModal, setOpenACModal] = useState(false);
+
+	if (contextMenu.visible === "main") {
 		return (
 			<ul
 				className="absolute text-white border rounded bg-neutral-700"
 				style={{
-					top: `${contextMenuMain.mouseY}px`,
-					left: `${contextMenuMain.mouseX}px`
+					top: `${contextMenu.mouseY}px`,
+					left: `${contextMenu.mouseX}px`
 				}}>
 				<li className="hover:cursor-pointer px-2 py-1 hover:bg-neutral-800 rounded" onClick={() => setOpenCDModal(true)}>
 					Create Database
@@ -50,26 +48,30 @@ export default function ModalsMain({
 							setLoading(false);
 						});
 					}}>
-					Refresh Databases
+					Refresh Database List
 				</li>
 			</ul>
 		);
-	} else if (contextMenuMain.visible === "database") {
+	} else if (contextMenu.visible === "database") {
 		return (
 			<ul
 				className="absolute text-white border rounded bg-neutral-700"
 				style={{
-					top: `${contextMenuMain.mouseY}px`,
-					left: `${contextMenuMain.mouseX}px`
+					top: `${contextMenu.mouseY}px`,
+					left: `${contextMenu.mouseX}px`
 				}}>
-				<li className="hover:cursor-pointer px-2 py-1 hover:bg-neutral-800 rounded" onClick={() => setOpenCTModal(true)}>
+				<li
+					className="hover:cursor-pointer px-2 py-1 hover:bg-neutral-800 rounded"
+					onClick={() => {
+						setOpenCTModal(true);
+					}}>
 					Create Table
 				</li>
 				<li
 					className="hover:cursor-pointer px-2 py-1 hover:bg-neutral-800 rounded"
 					onClick={() => {
 						setLoading(true);
-						executeQuery(`drop database ${contextMenuMain.database}`, []).then(response => {
+						executeQuery(`drop database ${contextMenu.database}`, []).then(response => {
 							executeQuery("show databases", []).then(response => {
 								setDatabases("data" in response ? response.data[0] : null);
 								setLoading(false);
@@ -77,6 +79,36 @@ export default function ModalsMain({
 						});
 					}}>
 					Drop Database
+				</li>
+			</ul>
+		);
+	} else if (contextMenu.visible === "table") {
+		return (
+			<ul
+				className="absolute text-white border rounded bg-neutral-700"
+				style={{
+					top: `${contextMenu.mouseY}px`,
+					left: `${contextMenu.mouseX}px`
+				}}>
+				<li
+					className="hover:cursor-pointer px-2 py-1 hover:bg-neutral-800 rounded"
+					onClick={() => {
+						setOpenACModal(true);
+					}}>
+					Add New Column
+				</li>
+				<li
+					className="hover:cursor-pointer px-2 py-1 hover:bg-neutral-800 rounded"
+					onClick={() => {
+						setLoading(true);
+						executeQuery(`drop table ${contextMenu.database}.${contextMenu.table}`, []).then(response => {
+							executeQuery(`show tables from ${contextMenu.database}`, []).then(response => {
+								setTables("data" in response ? response.data[0] : null);
+								setLoading(false);
+							});
+						});
+					}}>
+					Drop Table
 				</li>
 			</ul>
 		);
@@ -94,14 +126,24 @@ export default function ModalsMain({
 	} else if (openCTModal) {
 		return (
 			<CreateTableModal
+				database={contextMenu.database || ""}
 				setOpenCTModal={setOpenCTModal}
-				setDatabases={setDatabases}
-				openCTModal={openCTModal}
-				collations={collations}
 				setLoading={setLoading}
+				setTables={setTables}
 				setError={setError}
 			/>
 		);
+	} else if (openACModal) {
+		return (
+			<AddColumnModal
+				database={contextMenu.database || ""}
+				table={contextMenu.table || ""}
+				setOpenACModal={setOpenACModal}
+				setLoading={setLoading}
+				setTables={setTables}
+				setError={setError}
+			/>
+		)
 	} else if (error) {
 		return (
 			<div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">

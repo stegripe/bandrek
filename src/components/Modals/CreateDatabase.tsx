@@ -17,7 +17,7 @@ export default function CreateDatabaseModal({
 	collations: string[] | null;
 	openCDModal: boolean;
 }) {
-	const [newDatabaseData, setNewDatabaseData] = useState<DatabaseDataType[]>([{ name: "", collation: "" }]);
+	const [newDatabaseData, setNewDatabaseData] = useState<DatabaseDataType[]>([{ name: "", type: "" }]);
 
 	const handleInputChange = (index: number, event: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = event.target;
@@ -32,31 +32,21 @@ export default function CreateDatabaseModal({
 		const { name, value } = event.target;
 		const list: DatabaseDataType[] = [...newDatabaseData];
 		if (list[index] && name === "collation") {
-			list[index].collation = value;
+			list[index].type = value;
 			setNewDatabaseData(list);
 		}
-	};
-
-	const handleAddClick = () => {
-		setNewDatabaseData([...newDatabaseData, { name: "", collation: "" }]);
-	};
-
-	const handleRemoveClick = (index: number) => {
-		const list = [...newDatabaseData];
-		list.splice(index, 1);
-		setNewDatabaseData(list);
 	};
 
 	const onFormSubmit = () => {
 		setLoading(true);
 		setOpenCDModal(false);
 		newDatabaseData.forEach(database => {
-			if (database.name === "" || database.collation === "") {
+			if (database.name === "" || database.type === "") {
 				setError("Please fill all fields");
 				setLoading(false);
 				return;
 			}
-			executeQuery(`create database ${database.name} collate ${database.collation}`, []).then(response => {
+			executeQuery(`create database ${database.name} collate ${database.type}`, []).then(response => {
 				if ("data" in response) {
 					executeQuery("show databases", []).then(response => {
 						setDatabases("data" in response ? response.data[0] : null);
@@ -72,7 +62,7 @@ export default function CreateDatabaseModal({
 
 	return (
 		<div className="fixed z-10 inset-0 overflow-y-auto">
-			<div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+			<div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:p-0">
 				<div className="fixed inset-0 transition-opacity" aria-hidden="true">
 					<div className="absolute inset-0 bg-gray-500 opacity-75"></div>
 				</div>
@@ -85,18 +75,18 @@ export default function CreateDatabaseModal({
 					<div className="bg-neutral-700 px-4 pt-5 pb-4 sm:p-6">
 						<form onSubmit={onFormSubmit}>
 							{newDatabaseData.map((input, i) => (
-								<div key={i} className={"grid gap-2 grid-cols-5 mb-2"}>
+								<div key={i} className={"grid gap-2 grid-cols-2 mb-2"}>
 									<input
 										name="name"
-										className="w-full col-span-2 p-1 text-black border rounded focus:outline-none"
+										className="w-full col-span-1 p-1 text-black border rounded focus:outline-none"
 										value={input.name}
 										onChange={event => handleInputChange(i, event)}
 										placeholder="Name"
 									/>
 									<select
 										name="collation"
-										className="w-full p-1 col-span-2 text-black border rounded focus:outline-none"
-										value={input.collation}
+										className="w-full p-1 col-span-1 text-black border rounded focus:outline-none"
+										value={input.type}
 										onChange={event => handleSelectChange(i, event)}>
 										<option value="" disabled>
 											Choose Collation
@@ -107,22 +97,6 @@ export default function CreateDatabaseModal({
 											</option>
 										))}
 									</select>
-									<div className={"col-span-1"}>
-										{newDatabaseData.length !== 1 && (
-											<button
-												className="bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-												onClick={() => handleRemoveClick(i)}>
-												Remove
-											</button>
-										)}
-									</div>
-									{newDatabaseData.length - 1 === i && (
-										<button
-											className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
-											onClick={handleAddClick}>
-											Add
-										</button>
-									)}
 								</div>
 							))}
 							<div className="grid grid-cols-2 gap-4 justify-center">
@@ -134,7 +108,7 @@ export default function CreateDatabaseModal({
 								<button
 									onClick={() => setOpenCDModal(false)}
 									className="inline-flex justify-center rounded-md border shadow-sm px-4 py-2 text-base font-medium bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:my-3 sm:w-full sm:text-sm">
-									Close Modal
+									Close
 								</button>
 							</div>
 						</form>

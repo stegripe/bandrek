@@ -11,24 +11,29 @@ import Image from "next/image";
 export default function Index() {
 	const [selection, setSelection] = useState<{ database: string; table: string } | null>(null);
 	const [databases, setDatabases] = useState<{ Database: string }[] | null>(null);
+	const [tables, setTables] = useState<{ [K: string]: string }[] | null>(null);
 	const [collations, setCollations] = useState<string[] | null>(null);
-	const [error, setError] = useState<string | null>(null);
-	const [openCDModal, setOpenCDModal] = useState(false);
-	const [openCTModal, setOpenCTModal] = useState(false);
 	const [loading, setLoading] = useState(false);
-	const [contextMenuMain, setContextMenu] = useState<{ mouseX: number; mouseY: number; visible: string; database?: string }>({
+	const [contextMenu, setContextMenu] = useState<{
+		mouseX: number;
+		mouseY: number;
+		visible: string;
+		database?: string;
+		table?: string;
+	}>({
 		mouseX: 0,
 		mouseY: 0,
 		visible: ""
 	});
 
-	const handleRightClick = useCallback((event: React.MouseEvent, type: string, database?: string) => {
+	const handleRightClick = useCallback((event: React.MouseEvent, type: string, database?: string, table?: string) => {
 		event.preventDefault();
 		setContextMenu({
 			mouseX: event.clientX - 2,
 			mouseY: event.clientY - 4,
 			visible: type,
-			database
+			database,
+			table
 		});
 	}, []);
 
@@ -71,27 +76,28 @@ export default function Index() {
 										e.stopPropagation(); // Stop event from propagating to the parent
 										handleRightClick(e, "database", Database);
 									}}>
-									<TableDropdown head={Database} />
+									<TableDropdown
+										handleRightClick={handleRightClick}
+										setTables={setTables}
+										head={Database}
+										tables={tables}
+									/>
 								</div>
 							))}
 					</div>
 					<div className="w-full h-full overflow-auto">
-						<Editor />
+						<Editor setLoading={setLoading} />
 					</div>
 				</div>
 			</TableContext.Provider>
 			<ModalsMain
-				contextMenuMain={contextMenuMain}
-				setOpenCDModal={setOpenCDModal}
-				setOpenCTModal={setOpenCTModal}
 				setDatabases={setDatabases}
-				openCDModal={openCDModal}
-				openCTModal={openCTModal}
+				contextMenu={contextMenu}
 				setLoading={setLoading}
 				collations={collations}
-				setError={setError}
+				setTables={setTables}
 				loading={loading}
-				error={error}
+				tables={tables}
 			/>
 			{loading && (
 				<div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">

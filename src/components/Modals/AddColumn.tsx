@@ -1,22 +1,23 @@
 import { executeQuery } from "../../utils/api/executeQuery";
 
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from "react";
 import { dataOptions, dataTypes } from "../../utils/database";
 
-export default function CreateTableModal({
-	database,
-	setOpenCTModal,
+export default function AddColumnModal({
+	setOpenACModal,
 	setLoading,
 	setTables,
-	setError
+	database,
+	setError,
+	table
 }: {
-	database: string | null;
 	setTables: Dispatch<SetStateAction<{ [K: string]: string }[] | null>>;
 	setError: Dispatch<SetStateAction<string | null>>;
-	setOpenCTModal: Dispatch<SetStateAction<boolean>>;
+	setOpenACModal: Dispatch<SetStateAction<boolean>>;
 	setLoading: Dispatch<SetStateAction<boolean>>;
+	database: string | null;
+	table: string;
 }) {
-	const [newTableName, setNewTableName] = useState<string>("");
 	const [newTableData, setNewTableData] = useState<TableDataType[]>([{ name: "", type: "", length: "" }]);
 
 	const handleInputChange = (index: number, event: ChangeEvent<HTMLInputElement>) => {
@@ -67,6 +68,7 @@ export default function CreateTableModal({
 		switch (name) {
 			case "type":
 				list[index].type = value;
+				list[index].length = dataTypes.find(type => type.name === value)?.maxLength.toString() || "";
 				setNewTableData(list);
 				break;
 			case "isUnsigned":
@@ -110,7 +112,7 @@ export default function CreateTableModal({
 
 	const onFormSubmit = () => {
 		setLoading(true);
-		setOpenCTModal(false);
+		setOpenACModal(false);
 		const newTablesJoined = newTableData
 			.map(table => {
 				if (table.name === "" || table.type === "") {
@@ -147,18 +149,9 @@ export default function CreateTableModal({
 			})
 			.join(", ");
 
-		if (!newTablesJoined.includes("PRIMARY KEY")) {
-			setError("Please use a primary key");
-			setLoading(false);
-			return;
-		}
-
-		executeQuery(`create table ${database}.${newTableName} (${newTablesJoined})`, []).then(response => {
+		executeQuery(`alter table ${database}.${table} add ${newTablesJoined}`, []).then(response => {
 			if ("data" in response) {
-				executeQuery(`show tables from ${database}`, []).then(response => {
-					setTables("data" in response ? response.data[0] : null);
-					setLoading(false);
-				});
+				setLoading(false);
 			} else if ("message" in response) {
 				setError(response.message);
 				setLoading(false);
@@ -178,22 +171,15 @@ export default function CreateTableModal({
 					role="dialog"
 					aria-modal="true"
 					aria-labelledby="modal-headline">
-					<p className="text-center text-xl font-bold py-2 border-b border-black">Create Table</p>
+					<p className="text-center text-xl font-bold py-2 border-b border-black">Add New Column To {database}</p>
 					<div className="bg-neutral-700 px-4 pt-5 pb-4 sm:p-6">
 						<form onSubmit={onFormSubmit}>
-							<input
-								className="w-full p-1 text-black border rounded focus:outline-none mb-5"
-								type="text"
-								onChange={event => setNewTableName(event.target.value)}
-								placeholder="Table Name"
-							/>
 							{newTableData.map((input, i) => (
-								<div key={i} className="grid gap-2 grid-row-3 grid-cols-1 mb-2 border border-white p-2">
+								<div key={i} className="grid gap-2 grid-row-2 grid-cols-1 mb-2 border border-white p-2">
 									<div className={"grid gap-2 grid-cols-2 mb-2"}>
 										<input
 											name="name"
 											className="w-full col-span-1 p-1 text-black border rounded focus:outline-none"
-											value={input.name}
 											onChange={event => handleInputChange(i, event)}
 											placeholder="Column Name"
 										/>
@@ -225,9 +211,25 @@ export default function CreateTableModal({
 													: { disabled: true })}
 											/>
 										</div>
+										{newTableData.length - 1 === i && (
+											<button
+												className="col-span-1 bg-blue-700 hover:bg-blue-800 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+												onClick={handleAddClick}>
+												Add
+											</button>
+										)}
+										<div className={"col-span-1"}>
+											{newTableData.length !== 1 && (
+												<button
+													className="w-full bg-red-700 hover:bg-red-800 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+													onClick={() => handleRemoveClick(i)}>
+													Remove
+												</button>
+											)}
+										</div>
 									</div>
 									{dataOptions.map((dataOption, i) => (
-										<div key={i} className="flex flex-col row-span-1 md:flex-row">
+										<div key={i} className="flex flex-col col-span-2 md:flex-row">
 											{" "}
 											{/* Changed to flex-row for horizontal layout */}
 											{Object.keys(dataOption).map((option, index) => (
@@ -245,24 +247,6 @@ export default function CreateTableModal({
 											))}
 										</div>
 									))}
-									<div className="flex row-span-1 w-full grid-cols-2">
-										{newTableData.length - 1 === i && (
-											<button
-												type="button"
-												className="col-span-1 w-1/4 mr-4 bg-blue-700 hover:bg-blue-800 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
-												onClick={handleAddClick}>
-												Add
-											</button>
-										)}
-										{newTableData.length !== 1 && (
-											<button
-												type="button"
-												className="col-span-1 w-1/4 bg-red-700 hover:bg-red-800 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
-												onClick={() => handleRemoveClick(i)}>
-												Remove
-											</button>
-										)}
-									</div>
 								</div>
 							))}
 							<div className="grid grid-cols-2 gap-4 justify-center">
@@ -272,8 +256,7 @@ export default function CreateTableModal({
 									Create
 								</button>
 								<button
-									type="button"
-									onClick={() => setOpenCTModal(false)}
+									onClick={() => setOpenACModal(false)}
 									className="inline-flex justify-center rounded-md border shadow-sm px-4 py-2 text-base font-medium bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:my-3 sm:w-full sm:text-sm">
 									Close Modal
 								</button>

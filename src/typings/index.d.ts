@@ -19,7 +19,19 @@ interface BigInt {
 
 interface DatabaseDataType {
 	name: string;
-	collation: string;
+	type: string;
+}
+
+interface TableDataType {
+	name: string;
+	type: string;
+	length: string;
+	isUnsigned?: boolean;
+	isAutoIncrement?: boolean;
+	isPrimaryKey?: boolean;
+	isUnique?: boolean;
+	isNotNull?: boolean;
+	isZerofill?: boolean;
 }
 
 interface CollationType {

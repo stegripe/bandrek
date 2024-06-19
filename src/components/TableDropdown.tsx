@@ -5,9 +5,18 @@ import HoverHL from "./HoverHL";
 
 import { useContext, useState } from "react";
 
-export default function TableDropdown({ head }: { head: string }) {
+export default function TableDropdown({
+	tables,
+	setTables,
+	head,
+	handleRightClick
+}: {
+	tables: { [K: string]: string }[] | null;
+	setTables: (tables: { [K: string]: string }[] | null) => void;
+	head: string;
+	handleRightClick: (event: React.MouseEvent, type: string, database?: string, table?: string) => void;
+}) {
 	const { setSelection } = useContext(TableContext);
-	const [tables, setTables] = useState<{ [K: string]: string }[] | null>(null);
 	const [loading, setLoading] = useState(false);
 
 	return (
@@ -16,9 +25,8 @@ export default function TableDropdown({ head }: { head: string }) {
 				if (tables || loading) return;
 
 				setLoading(true);
-				executeQuery(`show tables in ${head}`, []).then(response => {
+				executeQuery(`show tables from ${head}`, []).then(response => {
 					setTables("data" in response ? response.data[0] : null);
-					console.log(response);
 					setLoading(false);
 				});
 			}}
@@ -33,6 +41,10 @@ export default function TableDropdown({ head }: { head: string }) {
 					return (
 						<HoverHL key={name}>
 							<button
+								onContextMenu={e => {
+									e.stopPropagation();
+									handleRightClick(e, "table", head, name);
+								}}
 								onClick={() => setSelection({ database: head, table: name })}
 								className="text-left w-full h-full">
 								{name}
