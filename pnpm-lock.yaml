@@ -29,8 +29,8 @@ dependencies:
 
 devDependencies:
   '@types/node':
-    specifier: ^20.14.10
-    version: 20.14.10
+    specifier: ^20.14.11
+    version: 20.14.11
   '@types/react':
     specifier: ^18.3.3
     version: 18.3.3
@@ -56,8 +56,8 @@ devDependencies:
     specifier: ^5.0.9
     version: 5.0.9
   tailwindcss:
-    specifier: ^3.4.5
-    version: 3.4.5
+    specifier: ^3.4.6
+    version: 3.4.6
   tslib:
     specifier: ^2.6.3
     version: 2.6.3
@@ -391,8 +391,8 @@ packages:
     resolution: {integrity: sha512-nG96G3Wp6acyAgJqGasjODb+acrI7KltPiRxzHPXnP3NgI28bpQDRv53olbqGXbfcgF5aiiHmO3xpwEpS5Ld9g==}
     dev: false
 
-  /@types/node@20.14.10:
-    resolution: {integrity: sha512-MdiXf+nDuMvY0gJKxyfZ7/6UFsETO7mGKF54MVD/ekJS6HdFtpZFBgrh6Pseu64XTb2MLyFPlbW6hj8HYRQNOQ==}
+  /@types/node@20.14.11:
+    resolution: {integrity: sha512-kprQpL8MMeszbz6ojB5/tU8PLN4kesnN8Gjzw349rDlNgsSzg90lAVj3llK99Dh7JON+t9AuscPPFW6mPbTnSA==}
     dependencies:
       undici-types: 5.26.5
 
@@ -2123,7 +2123,7 @@ packages:
     engines: {node: '>= 14'}
     dependencies:
       '@types/geojson': 7946.0.14
-      '@types/node': 20.14.10
+      '@types/node': 20.14.11
       denque: 2.1.0
       iconv-lite: 0.6.3
       lru-cache: 10.2.0
@@ -2953,8 +2953,8 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /tailwindcss@3.4.5:
-    resolution: {integrity: sha512-DlTxttYcogpDfx3tf/8jfnma1nfAYi2cBUYV2YNoPPecwmO3YGiFlOX9D8tGAu+EDF38ryBzvrDKU/BLMsUwbw==}
+  /tailwindcss@3.4.6:
+    resolution: {integrity: sha512-1uRHzPB+Vzu57ocybfZ4jh5Q3SdlH7XW23J5sQoM9LhE9eIOlzxer/3XPSsycvih3rboRsvt0QCmzSrqyOYUIA==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
@@ -3219,7 +3219,7 @@ packages:
   /wkx@0.5.0:
     resolution: {integrity: sha512-Xng/d4Ichh8uN4l0FToV/258EjMGU9MGcA0HV2d9B/ZpZB3lqQm7nkOdZdm5GhKtLLhAE7PiVQwN4eN+2YJJUg==}
     dependencies:
-      '@types/node': 20.14.10
+      '@types/node': 20.14.11
     dev: false
 
   /wrap-ansi@7.0.0:
