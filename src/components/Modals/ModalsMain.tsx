@@ -1,9 +1,7 @@
 import { executeQuery } from "../../utils/api/executeQuery";
-import AddColumnModal from "./AddColumn";
-
 import CreateDatabaseModal from "./CreateDatabase";
 import CreateTableModal from "./CreateTable";
-
+import AddColumnModal from "./AddColumn";
 import { Dispatch, SetStateAction, useState } from "react";
 
 export default function ModalsMain({

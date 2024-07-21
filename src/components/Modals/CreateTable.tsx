@@ -1,7 +1,6 @@
-import { executeQuery } from "../../utils/api/executeQuery";
-
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { dataOptions, dataTypes } from "../../utils/database";
+import { executeQuery } from "../../utils/api/executeQuery";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 
 export default function CreateTableModal({
 	database,

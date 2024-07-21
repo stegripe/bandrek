@@ -1,8 +1,8 @@
-/** @type {import('next').NextConfig} */
+/** @type {import("next").NextConfig} */
 const nextConfig = {
 	reactStrictMode: true,
 	images: {
-		domains: ["media.tenor.com"]
+		domains: ["cdn.stegripe.org","media.tenor.com"]
 	}
 };
 

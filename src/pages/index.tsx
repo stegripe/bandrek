@@ -1,10 +1,8 @@
 import { executeQuery } from "../utils/api/executeQuery";
-
 import ModalsMain from "../components/Modals/ModalsMain";
 import TableDropdown from "../components/TableDropdown";
 import TableContext from "../components/TableContext";
 import Editor from "../components/Editor";
-
 import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 

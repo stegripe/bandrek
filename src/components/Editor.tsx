@@ -1,11 +1,10 @@
-import { FaSave } from "react-icons/fa";
 import { executeQuery } from "../utils/api/executeQuery";
 import ModalsEditor from "./Modals/ModalsEditor";
 import TableContext from "./TableContext";
 import TabView from "./TabView";
-
 import { Dispatch, SetStateAction, useCallback, useContext, useEffect, useState } from "react";
 import { FaKey, FaXmark } from "react-icons/fa6";
+import { FaSave } from "react-icons/fa";
 
 export default function Editor({ setLoading }: { setLoading: Dispatch<SetStateAction<boolean>> }) {
 	const [qColumns, setQColumns] = useState<{ Field: string; Type: string; Key: string }[] | null>(null);

@@ -1,15 +1,19 @@
-version: '3'
+x-common-general: &common-general
+  restart: unless-stopped
+  deploy:
+    resources:
+      limits:
+        memory: 512M
+
 services:
   app:
+    <<: *common-general
+    image: ghcr.io/stegripe/bandrek:latest-dev
     container_name: bandrek-app
-    restart: on-failure
     depends_on:
       - mariadb
     links:
       - mariadb
-    build: 
-      context: .
-      dockerfile: Dockerfile
     ports:
       - "3000:3000"
     expose:
@@ -20,6 +24,7 @@ services:
       - /app/.next
     networks:
       - bandrek
+
   mariadb:
     image: mariadb
     container_name: bandrek-mariadb

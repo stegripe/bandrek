@@ -2,7 +2,6 @@ import { executeQuery } from "../utils/api/executeQuery";
 import TableContext from "./TableContext";
 import Dropdown from "./Dropdown";
 import HoverHL from "./HoverHL";
-
 import { useContext, useState } from "react";
 
 export default function TableDropdown({

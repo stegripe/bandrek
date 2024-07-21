@@ -2,6 +2,16 @@
     "name": "bandrek",
     "version": "1.0.0",
     "description": "Sebuah standalone MySQL Panel (bundled), yang dapat digunakan untuk mempermudah workflow penggunaan. Menggunakan MariaDB sebagai database.",
+    "license": "AGPL-3.0",
+    "author": "Stegripe Development <support@stegripe.org>",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/stegripe/bandrek.git"
+    },
+    "bugs": {
+        "url": "https://github.com/stegripe/bandrek/issues"
+    },
+    "homepage": "https://github.com/stegripe/bandrek#readme",
     "main": "dist/index.js",
     "scripts": {
         "build": "next build",
@@ -9,16 +19,6 @@
         "start": "next start -p 3000",
         "dev": "next dev"
     },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/stegripe/bandrek.git"
-    },
-    "author": "Stegripe <admin@stegripe.org>",
-    "license": "AGPL-3.0",
-    "bugs": {
-        "url": "https://github.com/stegripe/bandrek/issues"
-    },
-    "homepage": "https://github.com/stegripe/bandrek#readme",
     "engines": {
         "node": ">=16.6.0",
         "npm": ">=7.0.0"

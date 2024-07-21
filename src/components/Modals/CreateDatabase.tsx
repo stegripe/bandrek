@@ -1,5 +1,4 @@
 import { executeQuery } from "../../utils/api/executeQuery";
-
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 
 export default function CreateDatabaseModal({
