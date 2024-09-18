@@ -10,10 +10,10 @@ importers:
     dependencies:
       '@sequelize/core':
         specifier: 7.0.0-alpha.37
-        version: 7.0.0-alpha.37(mariadb@3.3.1)
+        version: 7.0.0-alpha.37(mariadb@3.3.2)
       mariadb:
-        specifier: ^3.3.1
-        version: 3.3.1
+        specifier: ^3.3.2
+        version: 3.3.2
       next:
         specifier: ^14.2.12
         version: 14.2.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -28,7 +28,7 @@ importers:
         version: 5.3.0(react@18.3.1)
       sequelize:
         specifier: ^6.37.3
-        version: 6.37.3(mariadb@3.3.1)
+        version: 6.37.3(mariadb@3.3.2)
     devDependencies:
       '@types/node':
         specifier: ^20.16.5
@@ -263,6 +263,9 @@ packages:
 
   '@types/node@20.16.5':
     resolution: {integrity: sha512-VwYCweNo3ERajwy0IUlqqcyZ8/A7Zwa9ZP3MnENWcB11AejO+tLy3pu850goUW2FC/IJMdZUfKpX/yxL1gymCA==}
+
+  '@types/node@22.5.5':
+    resolution: {integrity: sha512-Xjs4y5UPO/CLdzpgR6GirZJx36yScjh73+2NlLlkFRSoQN8B0DpfXPdZGnvVmLRLOsqDpOfTNv7D9trgGhmOIA==}
 
   '@types/prop-types@15.7.11':
     resolution: {integrity: sha512-ga8y9v9uyeiLdpKddhxYQkxNDrfvuPrlFb0N1qnZZByvcElJaXthF1UhvCh9TLWJBEHeNtdnbysW7Y6Uq8CVng==}
@@ -1091,6 +1094,9 @@ packages:
     resolution: {integrity: sha512-2bIM8x+VAf6JT4bKAljS1qUWgMsqZRPGJS6FSahIMPVvctcNhyVp7AJu7quxOW9jwkryBReKZY5tY5JYv2n/7Q==}
     engines: {node: 14 || >=16.14}
 
+  lru-cache@10.4.3:
+    resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
+
   lru-cache@11.0.0:
     resolution: {integrity: sha512-Qv32eSV1RSCfhY3fpPE2GNZ8jgM9X7rdAfemLWqTUxwiyIC4jJ6Sy0fZ8H+oLWevO6i4/bizg7c8d8i6bxrzbA==}
     engines: {node: 20 || >=22}
@@ -1099,8 +1105,8 @@ packages:
     resolution: {integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==}
     engines: {node: '>=10'}
 
-  mariadb@3.3.1:
-    resolution: {integrity: sha512-L8bh4iuZU3J8H7Co7rQ6OY9FDLItAN1rGy8kPA7Dyxo8AiHADuuONoypKKp1pE09drs6e5LR7UW9luLZ/A4znA==}
+  mariadb@3.3.2:
+    resolution: {integrity: sha512-kZvRy00thfFxEksfbDWq+77nB2M520PIZ26LLuHbOvyeZ5XQ3OCY/YsDDu+ifYNHIcs+7UCmjm50GiPdogc24w==}
     engines: {node: '>= 14'}
 
   merge2@1.4.1:
@@ -1850,7 +1856,7 @@ snapshots:
 
   '@rushstack/eslint-patch@1.7.2': {}
 
-  '@sequelize/core@7.0.0-alpha.37(mariadb@3.3.1)':
+  '@sequelize/core@7.0.0-alpha.37(mariadb@3.3.2)':
     dependencies:
       '@types/debug': 4.1.12
       '@types/validator': 13.11.9
@@ -1872,7 +1878,7 @@ snapshots:
       validator: 13.11.0
       wkx: 0.5.0
     optionalDependencies:
-      mariadb: 3.3.1
+      mariadb: 3.3.2
     transitivePeerDependencies:
       - supports-color
 
@@ -1894,6 +1900,10 @@ snapshots:
   '@types/ms@0.7.34': {}
 
   '@types/node@20.16.5':
+    dependencies:
+      undici-types: 6.19.6
+
+  '@types/node@22.5.5':
     dependencies:
       undici-types: 6.19.6
 
@@ -2911,19 +2921,21 @@ snapshots:
 
   lru-cache@10.2.0: {}
 
+  lru-cache@10.4.3: {}
+
   lru-cache@11.0.0: {}
 
   lru-cache@6.0.0:
     dependencies:
       yallist: 4.0.0
 
-  mariadb@3.3.1:
+  mariadb@3.3.2:
     dependencies:
       '@types/geojson': 7946.0.14
-      '@types/node': 20.16.5
+      '@types/node': 22.5.5
       denque: 2.1.0
       iconv-lite: 0.6.3
-      lru-cache: 10.2.0
+      lru-cache: 10.4.3
 
   merge2@1.4.1: {}
 
@@ -3266,7 +3278,7 @@ snapshots:
 
   sequelize-pool@8.0.0: {}
 
-  sequelize@6.37.3(mariadb@3.3.1):
+  sequelize@6.37.3(mariadb@3.3.2):
     dependencies:
       '@types/debug': 4.1.12
       '@types/validator': 13.11.9
@@ -3285,7 +3297,7 @@ snapshots:
       validator: 13.11.0
       wkx: 0.5.0
     optionalDependencies:
-      mariadb: 3.3.1
+      mariadb: 3.3.2
     transitivePeerDependencies:
       - supports-color
 
